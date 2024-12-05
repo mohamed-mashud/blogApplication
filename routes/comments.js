@@ -1,7 +1,8 @@
 const express = require("express");
 const commentRouter = express.Router();
 const {Posts, Comments} = require("../db")
-
+const {authMiddleware} = require("../middleware")
+commentRouter.use(authMiddleware);
 
 /**
  * READ THIISSSS

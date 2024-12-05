@@ -1,8 +1,8 @@
 const express = require("express");
 const postRouter = express.Router();
 const {Posts} = require("../db")
-
-
+const {authMiddleware} = require("../middleware")
+postRouter.use(authMiddleware);
 /**
  * READ THIISSSS
  * before moving onto the parameters in this code

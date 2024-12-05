@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
         password,
         email
     });
-
+    
     const user_id = user._id;
     const token = jwt.sign({
         user_id
@@ -48,12 +48,12 @@ router.post("/login", async (req, res) => {
         return res.status(400).send("User doesnt exist, register to use")
     if(user.password !== password)
         return res.status(400).send("Password doesnt match with email")
-
+    
     const userId = user._id;
     const token = jwt.sign({
         userId
     }, process.env.JWT_SECRET)
-
+    
     res.json({
         msg: "User logged in",
         token
