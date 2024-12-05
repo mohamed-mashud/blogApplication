@@ -54,13 +54,14 @@ postRouter.post("/", async (req, res)=> {
 /**
  * both the get methods with id and not id doesnt require any parameters
  */
-postRouter.get("/", (req, res)=> {
+postRouter.get("/", async (req, res)=> {
     try {
         return res.json({
-            posts : Posts.findAll()
+            posts : await Posts.find()
         });
     } catch(error) {
-        return res.status(500).send("Error in database");   
+        console.log(error);
+        return res.status(500).send("Error in database at get method of posts");   
     }
 });
 
@@ -92,20 +93,20 @@ postRouter.put("/:id", async (req, res)=> {
         return res.status(400).send("Either the post doesnt exist or the author doesnt made any posts")
     try {
         await Posts.updateOne({
-            _id               
+            _id : postId               
         }, {
             $set: {
                 title: req.body.title,
                 content: req.body.content
             }
         })
+        return res.json({
+            msg: "Post updated successfully"
+        })
     } catch(error) {
         console.log(error);
         return res.status(500).send("Error in database");
     }
-    return res.json({
-        msg: "Post updated successfully"
-    })
 });
 
 
