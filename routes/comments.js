@@ -38,20 +38,21 @@ commentRouter.post("/", async (req, res) => {
         return res.status(400).send("check post_id // comment can only be created, if a post exists");
 
     try {
-        await Comments.create({
+        const createdComment = await Comments.create({
             content,
             author_id,
             post_id
         });
+        return res.json({
+            Message: "Comment created successfully",
+            commentId : createdComment._id
+        })
     } catch (error) {
         return res.json({
             error: error.message,
             Message: "Error in db"
         })
     }
-    return res.json({
-        Message: "Comment created successfully"
-    })
 })
 
 /**
@@ -75,21 +76,21 @@ commentRouter.get("/", async (req, res) => {
  */
 commentRouter.get("/:id", async (req, res) => {
     const comment_id = req.params.id;
-    const commentExists = await Comments.findById({
-        comment_id
+    const commentExists = await Comments.findOne({
+       _id: comment_id
     });
     
     if(!commentExists)
         return res.json({
             message: "Comment does not exist"
         })
-        else 
-        return res.json({
-    comment: commentExists
-})
+    return res.json({
+        comment: commentExists
+    })
 });
 
 /**
+ * For updating a comment
  * needs to pass content in the request body 
  * with comment id as parameter
  */
@@ -97,27 +98,28 @@ commentRouter.put("/:id", async (req, res) => {
     const comment_id = req.params.id;
     const contentToBeUpdated = req.body.content;
     const commentExists = await Comments.findById({
-        comment_id
+        _id : comment_id
     });
 
     if(!commentExists || contentToBeUpdated === undefined)
         return res.json({
             message: "Comment does not exist // pass content as req body"
         })
-        try {
-            await Comments.updateOne({
-                comment_id
-        }, {
-            $set: {
-                content: contentToBeUpdated 
-            }
+    try {
+        await Comments.updateOne({
+                _id: comment_id
+            }, {
+                $set: {
+                    content: contentToBeUpdated 
+                }
+        })
+        return res.json({
+            message: "Comment updated successfully",
+            updatedCommentId : comment_id
         })
     } catch (error) {
         return res.status(500).send("Error in db");
     }
-    return res.json({
-        message: "Comment updated successfully"
-    })
 });
 
 
@@ -127,7 +129,7 @@ commentRouter.put("/:id", async (req, res) => {
 commentRouter.delete("/:id", async (req, res) => {
     const comment_id = req.params.id;
     const commentExists = await Comments.findById({
-        comment_id
+        _id: comment_id
     });
     
     if(!commentExists)
@@ -137,16 +139,16 @@ commentRouter.delete("/:id", async (req, res) => {
     
     try {
         await Comments.deleteOne({
-            comment_id
+            _id : comment_id
         });    
+        return res.json({
+            message: "Comment deleted successfully"
+        })
     } catch (error) {
         return res.json({
-            message: "Error in db"
+            message: "Error in db while deleting comment"
         })
     }
-    return res.json({
-        message: "Comment deleted successfully"
-    })
 });
 
 module.exports = commentRouter;
