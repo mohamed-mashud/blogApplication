@@ -7,7 +7,7 @@ const authMiddleware = (req, res, next) => {
 
     if(!authHeader || authHeader.length == 0 || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({
-            message: "Authentication header invalid",
+            message: `Authentication header invalid try to login and get Auth token then use it`,
             authHeader
         })
     }

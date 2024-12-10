@@ -32,10 +32,7 @@ postRouter.post("/", async (req, res)=> {
     const user_id = req.body.user_id;
     const title = req.body.title;
     const content = req.body.content;
-
-    if(user_id === undefined || title === undefined || content === undefined) {
-        return res.status(400).send("input all the required data, also in json format");
-    }
+    
     try {
         const currPost = await Posts.create({
             title,

@@ -3,7 +3,7 @@ const router = express.Router();
 const postRouter = require("./posts.js");
 const commentRouter = require("./comments.js");
 const jwt = require("jsonwebtoken")
-const {Users} = require("../db.js")
+const { Users } = require("../db.js")
 const dotenv = require("dotenv")
 dotenv.config();
 
@@ -49,9 +49,9 @@ router.post("/login", async (req, res) => {
     if(user.password !== password)
         return res.status(400).send("Password doesnt match with email")
     
-    const userId = user._id;
+    const user_id = user._id;
     const token = jwt.sign({
-        userId
+        user_id
     }, process.env.JWT_SECRET)
     
     res.json({
