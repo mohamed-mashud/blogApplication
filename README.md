@@ -1,8 +1,30 @@
-### BLOG APPLICATION IN NODE.JS
-run command 
-npm install 
-set up a .env file
+# Blog Application in Node.js
 
-and input the MONGODB_URL, PORT and  JWT_SECRET
+## Description
+A Node.js application for blog management with MongoDB integration.
 
-run node index.js
+## Getting Started
+
+### Prerequisites
+- Node.js
+- MongoDB
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Install node-module
+   ```bash
+   npm install
+   ```
+3. Setup environment variables
+   ```bash
+   MONGODB_URL=<mongodb-url>
+   PORT=<desired port number
+   JWT_SECRET=<jwt-secret>
+   ```
+4. Run the application
+   ```bash
+   node index.js
+   ```
