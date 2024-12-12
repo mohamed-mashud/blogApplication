@@ -31,6 +31,7 @@ router.post("/register", async (req, res) => {
     
     res.json({
         msg: "User registered successfully",
+        user_id,
         token
     })
 });
@@ -56,6 +57,7 @@ router.post("/login", async (req, res) => {
     
     res.json({
         msg: "User logged in",
+        user_id,
         token
     })
 })

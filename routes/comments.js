@@ -25,6 +25,12 @@ commentRouter.use(authMiddleware);
 /**
  * creates a comment only if a respective post exists
  * or else create a poost first
+ * url: http://localhost:3000/comments/
+ * eg : {
+ *      "post_id" : "",
+ *      "content" : "comments content",
+ *      "author_id" : "user_id from login / register endpoints"
+ *  }
  */
 commentRouter.post("/", async (req, res) => {
     const content = req.body.content;
@@ -59,7 +65,7 @@ commentRouter.post("/", async (req, res) => {
 /**
  * return comments in a particular post
  * post_id should be passed as query parameters such as
- * like this ==> /comments?post_id=tempPostID
+ * url: http://localhost:3000//comments?post_id={post_id}
  */
 commentRouter.get("/", async (req, res) => {
     const post_id = req.query.post_id;
@@ -74,6 +80,7 @@ commentRouter.get("/", async (req, res) => {
 /**
  * get a single comment with comment id as 
  * parameter in the url
+ * url: http://localhost:3000/comments/{comment_id}
  */
 commentRouter.get("/:id", async (req, res) => {
     const comment_id = req.params.id;
@@ -94,6 +101,10 @@ commentRouter.get("/:id", async (req, res) => {
  * For updating a comment
  * needs to pass content in the request body 
  * with comment id as parameter
+ * url: http://localhost:3000/comments/{comment_id}
+ * eg: {
+ *  "content" : "updated comment"
+ * }  
  */
 commentRouter.put("/:id", async (req, res) => {
     const comment_id = req.params.id;
@@ -126,6 +137,8 @@ commentRouter.put("/:id", async (req, res) => {
 
 /**
  * delete a particular comment using the comment_id
+ * url: http://localhost:3000/comments/{comment_id}
+ * 
  */
 commentRouter.delete("/:id", async (req, res) => {
     const comment_id = req.params.id;

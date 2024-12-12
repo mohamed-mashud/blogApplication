@@ -3,6 +3,7 @@ const postRouter = express.Router();
 const {Posts} = require("../db")
 const {authMiddleware} = require("../middleware")
 postRouter.use(authMiddleware);
+
 /**
  * READ THIISSSS
  * before moving onto the parameters in this code
@@ -27,6 +28,13 @@ postRouter.use(authMiddleware);
 
 /**
  * requires user_id, title, content
+ * eg : 
+ * url: http://localhost:3000/posts/
+ * {
+ *  "title": "title of the post",
+ *  "content": "content of the post",
+ *  "user_id" : "user id from mongoDB"
+ * }
  */
 postRouter.post("/", async (req, res)=> {
     const user_id = req.body.user_id;
@@ -50,6 +58,7 @@ postRouter.post("/", async (req, res)=> {
 
 /**
  * both the get methods with id and not id doesnt require any parameters
+ * 
  */
 postRouter.get("/", async (req, res)=> {
     try {
@@ -61,7 +70,9 @@ postRouter.get("/", async (req, res)=> {
         return res.status(500).send("Error in database at get method of posts");   
     }
 });
-
+/**
+ *  url: http://localhost:3000/posts/{posts_id}
+*/
 postRouter.get("/:id", async (req, res)=> {
     const author_id = req.params.id;
     try {
@@ -79,13 +90,19 @@ postRouter.get("/:id", async (req, res)=> {
 /**
  * For updating post with _id (ie)  the post id
  * pass the title and content that needs to be modified
- */
+ *  url: http://localhost:3000/posts/{posts_id}
+ *  eg : 
+ *  {
+ *      "title" : "title that needs to change",
+ *      "content" : "content which needs to be modified"
+ *  }
+*/
 postRouter.put("/:id", async (req, res)=> {
     const postId = req.params.id;
     const post = await Posts.findOne({
         _id: postId
     })
-
+    
     if(!post)
         return res.status(400).send("Either the post doesnt exist or the author doesnt made any posts")
     try {
@@ -106,6 +123,11 @@ postRouter.put("/:id", async (req, res)=> {
     }
 });
 
+
+/**
+ *  url: http://localhost:3000/posts/{posts_id}
+ * 
+*/
 
 postRouter.delete("/:id", async (req, res)=> {
     const postExists = await Posts.findById({
