@@ -5,8 +5,8 @@ dotenv.config();
 
 function connectToDatabase(url) {
     mongoose.connect(url)
-    .then(() => console.log("connected"))
-    .catch((err) => console.log("not connected" + err))
+    .then(() => console.log("Database connected"))
+    .catch((err) => console.log("Database not connected" + err))
 }
 connectToDatabase(process.env.MONGODB_URL)
 
