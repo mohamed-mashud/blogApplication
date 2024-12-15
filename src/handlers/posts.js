@@ -1,10 +1,14 @@
 const { Posts } = require("../db.js")
 
 const createPostHandler = async (req, res)=> {
-    const user_id = req.body.user_id;
+    const user_id = req.body.user_id;    
     const title = req.body.title;
     const content = req.body.content;
-    
+
+    if(user_id.length !== 24)
+        return res.status(400).json({
+            Message: "user_id should be of len 24"
+        })
     try {
         const currPost = await Posts.create({
             title,
@@ -34,9 +38,11 @@ const getAllPostsHandler = async (req, res)=> {
 }
 
 const getPostByIdHandler = async (req, res)=> {
-    const id = req.params.id;
+    const _id = req.params.id;
+    if(_id.length !== 24)
+        return res.status(404).send({Message: "Post doesnt exist"})
     try {
-        const post = await Posts.findOne({id})
+        const post = await Posts.findOne({_id});        
         if(!post)
             return res.status(404).json({
                 message : "Post Not found"
@@ -52,6 +58,8 @@ const getPostByIdHandler = async (req, res)=> {
 
 const updatePostByIdHandler = async (req, res)=> {
     const postId = req.params.id;
+    if(postId.length !== 24)
+        return res.status(404).send({Message: "Post doesnt exist"})
     const post = await Posts.findOne({
         _id: postId
     })
@@ -79,8 +87,11 @@ const updatePostByIdHandler = async (req, res)=> {
 };
 
 const deletePostByIdHandler = async (req, res)=> {
+    const _id = req.params.id;
+    if(_id.length !== 24)
+        return res.status(404).send({Message: "Post doesnt exist"})
     const postExists = await Posts.findById({
-        _id: req.params.id
+        _id
     });
     if(!postExists)
         return res.status(500).json({

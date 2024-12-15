@@ -20,7 +20,7 @@ describe("Post Handlers", () => {
     describe("POST /posts", () => {
         it("should create a post successfully", async () => {
             const postData = {
-                user_id: "user123",
+                user_id: "MongoDBIdOnlySuport24Len",
                 title: "Test Post",
                 content: "This is a test post",
             };
@@ -52,7 +52,7 @@ describe("Post Handlers", () => {
                 .post("/posts")
                 .set("Authorization", `Bearer ${mockToken}`)
                 .send({
-                    user_id: "user123",
+                    user_id: "MongoDBIdOnlySuport24Len",
                     title: "Test Post",
                     content: "This is a test post",
                 });
@@ -96,12 +96,12 @@ describe("Post Handlers", () => {
 
     describe("GET /posts/:id", () => {
         it("should retrieve a post by ID", async () => {
-            const mockPost = { _id: "123", title: "Test Title", content: "Test Content" };
+            const mockPost = { _id: "MongoDBIdOnlySuport24Len", title: "Test Title", content: "Test Content" };
 
             Posts.findOne.mockResolvedValue(mockPost);
 
             const response = await request(app)
-                .get("/posts/123")
+                .get("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`);
 
             expect(response.status).toBe(200);
@@ -113,7 +113,7 @@ describe("Post Handlers", () => {
             Posts.findOne.mockResolvedValue(null);
 
             const response = await request(app)
-                .get("/posts/post123")
+                .get("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`);
 
             expect(response.status).toBe(404);
@@ -125,28 +125,28 @@ describe("Post Handlers", () => {
 
     describe("PUT /posts/:id", () => {
         it("should update a post successfully", async () => {
-            const mockPost = { _id: "post123", title: "Old Title", content: "Old Content" };
+            const mockPost = { _id: "MongoDBIdOnlySuport24Len", title: "Old Title", content: "Old Content" };
             Posts.findOne.mockResolvedValue(mockPost);
             Posts.updateOne.mockResolvedValue({});
 
             const response = await request(app)
-                .put("/posts/post123")
+                .put("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`)
                 .send({ title: "New Title", content: "New Content" });
 
             expect(response.status).toBe(200);
             expect(response.body).toEqual({ msg: "Post updated successfully" });
             expect(Posts.updateOne).toHaveBeenCalledWith(
-                { _id: "post123" },
+                { _id: "MongoDBIdOnlySuport24Len" },
                 { $set: { title: "New Title", content: "New Content" } }
             );
         });
 
-        it("should return 400 if post not found", async () => {
+        it("should return 404 if post not found", async () => {
             Posts.findOne.mockResolvedValue(null);
 
             const response = await request(app)
-                .put("/posts/post123")
+                .put("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`)
                 .send({ title: "New Title", content: "New Content" });
 
@@ -159,23 +159,23 @@ describe("Post Handlers", () => {
 
     describe("DELETE /posts/:id", () => {
         it("should delete a post successfully", async () => {
-            Posts.findById.mockResolvedValue({ _id: "post123" });
+            Posts.findById.mockResolvedValue({ _id: "MongoDBIdOnlySuport24Len" });
             Posts.deleteOne.mockResolvedValue({});
 
             const response = await request(app)
-                .delete("/posts/post123")
+                .delete("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`);
 
             expect(response.status).toBe(200);
             expect(response.body).toEqual({ msg: "post deleled successfully" });
-            expect(Posts.deleteOne).toHaveBeenCalledWith({ _id: "post123" });
+            expect(Posts.deleteOne).toHaveBeenCalledWith({ _id: "MongoDBIdOnlySuport24Len" });
         });
 
         it("should return 500 if post does not exist", async () => {
             Posts.findById.mockResolvedValue(null);
 
             const response = await request(app)
-                .delete("/posts/post123")
+                .delete("/posts/MongoDBIdOnlySuport24Len")
                 .set("Authorization", `Bearer ${mockToken}`);
 
             expect(response.status).toBe(500);

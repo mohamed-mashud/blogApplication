@@ -4,6 +4,7 @@ const postRouter = require("./posts.js");
 const commentRouter = require("./comments.js");
 const jwt = require("jsonwebtoken")
 const { Users } = require("../db.js")
+const { authMiddleware } = require("../middleware.js")
 const dotenv = require("dotenv")
 dotenv.config();
 
@@ -59,6 +60,15 @@ router.post("/login", async (req, res) => {
         msg: "User logged in",
         user_id,
         token
+    })
+})
+
+router.use(authMiddleware)
+
+router.get("/users", async (req, res) => {
+    const users = await Users.find({});
+    return res.json({
+        users
     })
 })
 

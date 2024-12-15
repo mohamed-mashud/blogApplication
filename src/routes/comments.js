@@ -34,7 +34,7 @@ commentRouter.post("/", postCommentHandler);
 /**
  * return comments in a particular post
  * post_id should be passed as query parameters such as
- * url: http://localhost:3000//comments?post_id={post_id}
+ * url: http://localhost:3000/comments?post_id={post_id}
  */
 commentRouter.get("/", getAllCommentsInAPostHandler);
 
