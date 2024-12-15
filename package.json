@@ -1,0 +1,26 @@
+{
+  "name": "blogapplication",
+  "version": "1.0.0",
+  "description": "setting up a RESTful API for a blog application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest --detectOpenHandles"
+  },
+  "author": "Mohamed Masood N",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.3",
+    "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14"
+  }
+}

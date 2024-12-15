@@ -1,6 +1,6 @@
 const {Posts, Comments} = require("../db.js")
 
-const postComment = async (req, res) => {
+const postCommentHandler = async (req, res) => {
     const content = req.body.content;
     const author_id = req.body.author_id;
     const post_id = req.body.post_id;
@@ -27,7 +27,7 @@ const postComment = async (req, res) => {
     }
 };
 
-const getAllCommentsInAPost = async (req, res) => {
+const getAllCommentsInAPostHandler = async (req, res) => {
     const post_id = req.query.post_id;
     const comments = await Comments.find({
         post_id
@@ -37,7 +37,7 @@ const getAllCommentsInAPost = async (req, res) => {
     })
 };
 
-const getCommentById = async (req, res) => {
+const getCommentByIdHandler = async (req, res) => {
     const comment_id = req.params.id;
     const commentExists = await Comments.findOne({
        _id: comment_id
@@ -52,7 +52,7 @@ const getCommentById = async (req, res) => {
     })
 };
 
-const updateCommentById = async (req, res) => {
+const updateCommentByIdHandler = async (req, res) => {
     const comment_id = req.params.id;
     const contentToBeUpdated = req.body.content;
     const commentExists = await Comments.findById({
@@ -80,7 +80,7 @@ const updateCommentById = async (req, res) => {
     }
 };
 
-const deleteCommentById = async (req, res) => {
+const deleteCommentByIdHandler = async (req, res) => {
     const comment_id = req.params.id;
     const commentExists = await Comments.findById({
         _id: comment_id
@@ -106,9 +106,9 @@ const deleteCommentById = async (req, res) => {
 };
 
 module.exports = {
-    postComment,
-    getAllCommentsInAPost,
-    getCommentById,
-    updateCommentById,
-    deleteCommentById
+    postCommentHandler,
+    getAllCommentsInAPostHandler,
+    getCommentByIdHandler,
+    updateCommentByIdHandler,
+    deleteCommentByIdHandler
 }

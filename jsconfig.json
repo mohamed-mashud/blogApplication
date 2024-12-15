@@ -1,0 +1,8 @@
+{
+    "testEnvironment" : "node",
+    "typeAcquisition": {
+        "include": ["jest"]
+    },
+    "testMatch" : ["**/**/*.test.js"],
+    "forceExit" : true
+}

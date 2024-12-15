@@ -1,11 +1,11 @@
 const express = require("express");
 const commentRouter = express.Router();
 const { authMiddleware } = require("../middleware");
-const { postComment, 
-        getAllCommentsInAPost,
-        getCommentById, 
-        updateCommentById, 
-        deleteCommentById } = require("../handlers/comments");
+const { postCommentHandler, 
+        getAllCommentsInAPostHandler,
+        getCommentByIdHandler, 
+        updateCommentByIdHandler, 
+        deleteCommentByIdHandler } = require("../handlers/comments");
 commentRouter.use(authMiddleware);
 
 
@@ -29,21 +29,21 @@ commentRouter.use(authMiddleware);
  *      "author_id" : "user_id from login / register endpoints"
  *  }
  */
-commentRouter.post("/", postComment);
+commentRouter.post("/", postCommentHandler);
 
 /**
  * return comments in a particular post
  * post_id should be passed as query parameters such as
  * url: http://localhost:3000//comments?post_id={post_id}
  */
-commentRouter.get("/", getAllCommentsInAPost);
+commentRouter.get("/", getAllCommentsInAPostHandler);
 
 /**
  * get a single comment with comment id as 
  * parameter in the url
  * url: http://localhost:3000/comments/{comment_id}
  */
-commentRouter.get("/:id", getCommentById);
+commentRouter.get("/:id", getCommentByIdHandler);
 
 /**
  * For updating a comment
@@ -54,7 +54,7 @@ commentRouter.get("/:id", getCommentById);
  *  "content" : "updated comment"
  * }  
  */
-commentRouter.put("/:id", updateCommentById);
+commentRouter.put("/:id", updateCommentByIdHandler);
 
 
 /**
@@ -62,6 +62,6 @@ commentRouter.put("/:id", updateCommentById);
  * url: http://localhost:3000/comments/{comment_id}
  * 
  */
-commentRouter.delete("/:id", deleteCommentById);
+commentRouter.delete("/:id", deleteCommentByIdHandler);
 
 module.exports = commentRouter;

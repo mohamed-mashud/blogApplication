@@ -1,6 +1,6 @@
 const { Posts } = require("../db.js")
 
-const createPost = async (req, res)=> {
+const createPostHandler = async (req, res)=> {
     const user_id = req.body.user_id;
     const title = req.body.title;
     const content = req.body.content;
@@ -16,42 +16,50 @@ const createPost = async (req, res)=> {
             PostId : currPost._id
         })
     } catch (error) {
-        return res.status(500).send("Error in database");   
+        return res.status(500).json({
+            "message": "Error in database",
+        });   
     }
 };
 
-const getAllPostsHandler = async (res)=> {
+const getAllPostsHandler = async (req, res)=> {
     try {
         const posts = await Posts.find();
         return res.json({
             posts
         })
     } catch(error) {
-        // console.error("Error in fetching posts: ", error);
-        return res.status(500).send("Error in database at get method of posts");   
+        return res.status(500).json({ message : "Error in database at get method of posts" });   
     }
 }
 
-const getPostById = async (req, res)=> {
-    const _id = req.params.id;
+const getPostByIdHandler = async (req, res)=> {
+    const id = req.params.id;
     try {
-        const post = await Posts.findById({_id})
-        return res.json({
+        const post = await Posts.findOne({id})
+        if(!post)
+            return res.status(404).json({
+                message : "Post Not found"
+            });
+        return res.status(200).json({
             post
         });
+
     } catch (error) {
         return res.status(500).send("Error in database");   
     }
 };
 
-const updatePostById = async (req, res)=> {
+const updatePostByIdHandler = async (req, res)=> {
     const postId = req.params.id;
     const post = await Posts.findOne({
         _id: postId
     })
     
     if(!post)
-        return res.send(400).send("Either the post doesnt exist or the author doesnt made any posts")
+        return res.status(400).json({
+            message: "Post doesnt Exist"
+        })
     try {
         await Posts.updateOne({
             _id : postId               
@@ -70,12 +78,12 @@ const updatePostById = async (req, res)=> {
     }
 };
 
-const deletePostById = async (req, res)=> {
+const deletePostByIdHandler = async (req, res)=> {
     const postExists = await Posts.findById({
         _id: req.params.id
     });
     if(!postExists)
-        return res.status(400).json({
+        return res.status(500).json({
             msg : "Post doesnt exist"
         })
     else {
@@ -91,9 +99,9 @@ const deletePostById = async (req, res)=> {
     }
 };
 module.exports = {
-    createPost,
+    createPostHandler,
     getAllPostsHandler,
-    getPostById,
-    updatePostById,
-    deletePostById
+    getPostByIdHandler,
+    updatePostByIdHandler,
+    deletePostByIdHandler
 }

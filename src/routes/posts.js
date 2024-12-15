@@ -2,10 +2,10 @@ const express = require("express");
 const postRouter = express.Router();
 const {authMiddleware} = require("../middleware");
 const { getAllPostsHandler, 
-        getPostById, 
-        updatePostById, 
-        deletePostById, 
-        createPost } = require("../handlers/posts");
+        getPostByIdHandler, 
+        updatePostByIdHandler, 
+        deletePostByIdHandler, 
+        createPostHandler } = require("../handlers/posts");
 postRouter.use(authMiddleware);
 
 /**
@@ -26,7 +26,7 @@ postRouter.use(authMiddleware);
  *  "user_id" : "user id from mongoDB"
  * }
  */
-postRouter.post("/", createPost);
+postRouter.post("/", createPostHandler);
 
 /**
  * both the get methods with id and not id doesnt require any req.body
@@ -35,7 +35,7 @@ postRouter.post("/", createPost);
 postRouter.get("/", getAllPostsHandler);
 
 // url: http://localhost:3000/posts/{posts_id}
-postRouter.get("/:id", getPostById);
+postRouter.get("/:id", getPostByIdHandler);
 
 /**
  * For updating post with _id (ie)  the post id
@@ -47,10 +47,10 @@ postRouter.get("/:id", getPostById);
  *      "content" : "content which needs to be modified"
  *  }
 */
-postRouter.put("/:id", updatePostById);
+postRouter.put("/:id", updatePostByIdHandler);
 
 
 //url: http://localhost:3000/posts/{posts_id}
-postRouter.delete("/:id", deletePostById);
+postRouter.delete("/:id", deletePostByIdHandler);
 
 module.exports = postRouter;
