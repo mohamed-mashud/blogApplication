@@ -26,5 +26,9 @@ A Node.js application for blog management with MongoDB integration.
    ```
 4. Run the application
    ```bash
-   node index.js
+   npm run dev
+   ```
+5. Tests
+   ```bash
+   npm run test
    ```
