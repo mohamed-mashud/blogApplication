@@ -4,13 +4,20 @@ const postRouter = require("./posts.js");
 const commentRouter = require("./comments.js");
 const jwt = require("jsonwebtoken")
 const { Users } = require("../db.js")
-const { authMiddleware } = require("../middleware.js")
 const dotenv = require("dotenv")
 dotenv.config();
 
 router.use("/posts", postRouter)
 router.use("/comments", commentRouter)
 
+
+/** request Body 
+    * eg : {
+    *  "username": "username",
+    *  "password" : "password123",
+    *  "email"    : "user@123"
+    * }
+* */
 router.post("/register", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -63,13 +70,13 @@ router.post("/login", async (req, res) => {
     })
 })
 
-router.use(authMiddleware)
+// router.use(authMiddleware)
 
-router.get("/users", async (req, res) => {
-    const users = await Users.find({});
-    return res.json({
-        users
-    })
-})
+// router.get("/users", async (req, res) => {
+//     const users = await Users.find({});
+//     return res.json({
+//         users
+//     })
+// })
 
 module.exports = router;
