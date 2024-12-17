@@ -12,7 +12,7 @@ A Node.js application for blog management with MongoDB integration.
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mohamed-mashud/blogApplication
    ```
 2. Install node-module
    ```bash
